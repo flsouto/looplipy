@@ -24,6 +24,7 @@ class Wav:
     def __init__(self, file):
         self.file = file
         self._len = None
+        self._bpm = None
 
     def len(self):
         if not self._len:
@@ -35,8 +36,10 @@ class Wav:
         return 4 if len <= 4 else 8 if len <= 8 else 16
 
     def bpm(self):
-        len = self.len()
-        return 120 / len * self.baselen()
+        if not self._bpm:
+            len = self.len()
+            self._bpm = 120 / len * self.baselen()
+        return self_bpm
 
     def tmpf():
         fname = 'looplipy_' + next(tempfile._get_candidate_names()) + '.wav'
@@ -51,7 +54,9 @@ class Wav:
         return self.mod('speed %f ' % (self.len()/new_len) )
 
     def resize_bpm(self,new_bpm):
-        return self.resize(120 * self.baselen() / new_bpm)
+        obj = self.resize(120 * self.baselen() / new_bpm)
+        obj._bpm = new_bpm
+        return obj
 
     def round_bpm(self):
         bpm = self.bpm()
