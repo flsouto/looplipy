@@ -65,6 +65,9 @@ class Wav:
     def __getattr__(self,prop):
         return lambda *args : self.mod(prop + " " + " ".join(args))
 
+    def play(self):
+        run(["play", self.file])
+
     def save(dest):
         shutil.copy(this.file, dest)
 
