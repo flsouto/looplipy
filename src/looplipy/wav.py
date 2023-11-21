@@ -39,7 +39,7 @@ class Wav:
         if not self._bpm:
             len = self.len()
             self._bpm = 120 / len * self.baselen()
-        return self_bpm
+        return self._bpm
 
     def tmpf():
         fname = 'looplipy_' + next(tempfile._get_candidate_names()) + '.wav'
