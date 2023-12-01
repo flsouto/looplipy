@@ -41,8 +41,8 @@ class Wav:
             self._bpm = 120 / len * self.baselen()
         return self._bpm
 
-    def tmpf():
-        fname = 'looplipy_' + next(tempfile._get_candidate_names()) + '.wav'
+    def tmpf(ext='wav'):
+        fname = 'looplipy_' + next(tempfile._get_candidate_names()) + '.' + ext
         return tmpdir+ "/" + fname
 
     def mod(self, mods):
@@ -67,6 +67,22 @@ class Wav:
 
     def play(self):
         run(["play", self.file])
+
+    def mp3(self):
+        tmpf = self.__class__.tmpf('mp3')
+        run(['sox',self.file,tmpf])
+        return self.__class__(tmpf)
+
+    def wrap(wav):
+        return wav if isinstance(wav, __class__) else __class__(wav)
+
+    def join(*wavs):
+        args = ['sox']
+        args.extend([__class__.wrap(w).file for w in wavs])
+        tmpf = __class__.tmpf()
+        args.append(tmpf)
+        run(args)
+        return __class__(tmpf)
 
     def save(dest):
         shutil.copy(this.file, dest)
