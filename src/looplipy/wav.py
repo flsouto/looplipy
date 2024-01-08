@@ -70,7 +70,7 @@ class Wav:
 
     def mp3(self):
         tmpf = self.__class__.tmpf('mp3')
-        run(['sox',self.file,tmpf])
+        run(['sox',self.file,'-C','320',tmpf])
         return self.__class__(tmpf)
 
     def wrap(wav):
